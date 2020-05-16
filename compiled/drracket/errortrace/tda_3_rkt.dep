@@ -1,0 +1,1 @@
+("7.6" racket ("2b27915f5e6da7d88bdd1cafd568f5eabcc6dc60" . "29a3a16abca8f35fda72712e57d021098c8ef782") #"/Users/mariajesuscanoles/Desktop/PARADIGMA/lab1-paradigmas/listas.rkt" (collects #"errortrace" #"errortrace-key.rkt") (collects #"racket" #"main.rkt") (collects #"racket" #"runtime-config.rkt"))

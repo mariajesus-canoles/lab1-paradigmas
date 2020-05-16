@@ -17,7 +17,7 @@
   (if (string? rama)
       (if (> (calcular-largo-lista commit) 1)
           (if (aplicar-funcion-lista string? (calcular-largo-lista commit) commit)
-              (cons rama (list commit))
+              (cons rama (cons commit null))
               '())
           '())
       '()))
@@ -28,7 +28,7 @@
 ;Descripción: Función que comprueba si una lista ingresada cumple con los requisitos para considerarla un repositorio local 
 ;Dominio: Lista
 ;Recorrido: Booleano
-;Recursión:
+;Recursión: Cola
 (define local-repository? (lambda (L)
                              (define local-repository?-aux (lambda (L)
                                                               (if (null? (cdr L))

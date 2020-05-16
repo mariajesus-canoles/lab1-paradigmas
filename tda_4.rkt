@@ -16,7 +16,7 @@
   (if (string? rama)
       (if (> (calcular-largo-lista commit) 1)
           (if (aplicar-funcion-lista string? (calcular-largo-lista commit) commit)
-              (cons rama (list commit))
+              (cons rama (cons commit null))
               '())
           '())
       '()))

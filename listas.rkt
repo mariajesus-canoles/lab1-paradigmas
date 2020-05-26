@@ -4,7 +4,7 @@
 
 ;Descripción: Función que calcula el largo de una lista
 ;Dominio: Lista 
-;Recorrido: Número natural + {0}
+;Recorrido: Entero + {0}
 ;Recursión: Cola
 (define calcular-largo-lista (lambda (L)
                                (define calcular-largo-lista-aux (lambda (L n)
@@ -15,9 +15,8 @@
 
 
 ;Descripción: Funcion que aplica una funcion a un elemento
-;Dominio: Función y elemento que puede ser un string o entero
+;Dominio: Función X String o Entero
 ;Recorrido: Booleano
-;Recursión:
 (define aplicar-funcion-elemento (lambda (f elemento)
                                    (if (f elemento)
                                        #t
@@ -25,7 +24,7 @@
 
 
 ;Descripción: Función que aplica una función a todos los elementos de una lista
-;Dominio: Función, entero representando el largo de lista y una lista
+;Dominio: Función X Entero X Lista
 ;Recorrido: Booleano
 ;Recursión: Cola
 (define aplicar-funcion-lista (lambda (f n L)
@@ -37,7 +36,7 @@
 
 
 ;Descripción: Función que aplica una función a una lista de listas
-;Dominio: Función, entero representando el largo de lista y una lista de listas
+;Dominio: Función X Entero X Lista de listas
 ;Recorrido: Booleano
 ;Recursión: Cola
 (define aplicar-funcion-lista-de-listas (lambda (f n L)
@@ -50,8 +49,8 @@
 
 
 ;Descripción: Función que agrega un elemento al final de una lista
-;Dominio: Elemento que puede ser un string o entero y una lista
-;Recorrido: Lista con nuevo elemento
+;Dominio: String o Entero X Lista
+;Recorrido: Lista
 ;Recursión:
 (define agregar-elemento-final-lista (lambda (elemento L)
                                        (append L (list elemento))))
@@ -59,7 +58,7 @@
 
 ;Descripción: Función que agrega una lista aux a una lista
 ;Dominio: Dos listas
-;Recorrido: Lista que contiene a otra lista
+;Recorrido: Lista de listas
 ;Recursión: Cola
 (define agregar-lista-final-lista (lambda (lista L)
                                     (define agregar-lista-final-lista-aux (lambda (largo lista L)
@@ -70,7 +69,7 @@
 
 
 ;Descripción: Función que comprueba si un elemento se encuentra dentro de una lista
-;Dominio: String o entero representando el elemento y una lista 
+;Dominio: String o Entero X Lista
 ;Recorrido: Booleano
 ;Recursión: Cola
 (define elemento-en-lista (lambda (elemento L)
@@ -82,8 +81,8 @@
 
 
 ;Descripción: Función que obtiene un elemento de una lista
-;Dominio: Entero n y Lista L
-;Recorrido: Elemento de la lista
+;Dominio: Entero X Lista
+;Recorrido: Entero o String
 ;Recursión: Cola
 (define obtener-elemento-lista (lambda (n L)
                                  (if (= n 0)

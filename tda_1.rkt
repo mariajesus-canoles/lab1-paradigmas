@@ -10,9 +10,8 @@
 ;-----<CONSTRUCTOR>-----
 
 ;Descripción: Función que crea un workspace
-;Dominio: Uno o más strings, representando los archivos
-;Recorrido: Lista de archivos contenidos en el workspace
-;Recursión:
+;Dominio: String X ... X String
+;Recorrido: Workspace
 (define (workspace . archivo)
   (if (> (calcular-largo-lista archivo) 0)
       (if (aplicar-funcion-lista string? (calcular-largo-lista archivo) archivo)
@@ -24,9 +23,8 @@
 ;-----<PERTENENCIA>-----
 
 ;Descripción: Función que comprueba si una lista representa un workspace
-;Dominio: Lista L
+;Dominio: 'a type
 ;Recorrido: Booleano
-;Recursión:
 (define workspace? (lambda (L)
                      (if (list? L)
                          (if (null? L)
@@ -40,9 +38,9 @@
 ;-----<SELECTORES>-----
 
 
-;Descripción: Función que obtiene un archivo en la posición n (elemento) de una lista que representa el workspace (lista). La lista comienza con la posición 0
-;Dominio: Entero n representando la posición de un archivo y lista L representando el workspace
-;Recorrido: String representando un archivo
+;Descripción: Función que obtiene un archivo de la posición n (elemento) de unworkspace. El workspace comienza con la posición 0
+;Dominio: Entero X Workspace
+;Recorrido: String 
 ;Recursión: Cola
 (define get-archivo-workspace (lambda (n L)
                                 (if (workspace? L)
@@ -55,8 +53,8 @@
 ;-----<MODIFICADORES>-----
 
 ;Descripción: Función que agrega un archivo al wokspace
-;Dominio: String representando un archivo y lista representando el workspace
-;Recorrido: Lista representando el workspace
+;Dominio: String X Workspace
+;Recorrido: Workspace
 ;Recursión: Cola
 (define agregar-archivo-workspace (lambda (archivo L)
                                     (define agregar-archivo-workspace-aux (lambda (archivo L nuevo-L)
@@ -68,8 +66,8 @@
                                         -1)))
 
 ;Descripción: Función que elimina un archivo del workspace
-;Dominio: String representando un archivo y lista representando el workspace
-;Recorrido: Lista representando el workspace
+;Dominio: String x Workspace
+;Recorrido: Workspace
 ;Recursión: Cola
 (define eliminar-archivo-workspace (lambda (archivo L)
                                      (define eliminar-archivo-workspace-aux (lambda (archivo L nuevo-L)

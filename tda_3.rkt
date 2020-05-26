@@ -9,10 +9,10 @@
 
 ;-----<CONSTRUCTOR>-----
 
-;Descripción: Función que crea un repositorio local
-;Dominio: lista de n argumentos de strings, donde el primer elemento representa la rama, el segundo el mensaje del commit y los demás los archivos que acompañan al commit
-;Recorrido: una lista que contiene un elemento y una lista
-;Recursión:
+;Descripción: Función que crea un repositorio local, donde el primer elemento representa la rama,
+;             el segundo el mensaje del commit y los demás los archivos que acompañan al commit
+;Dominio: String X ... X String
+;Recorrido: Local-Repository
 (define (local-repository rama . commit)
   (if (string? rama)
       (if (> (calcular-largo-lista commit) 1)
@@ -26,7 +26,7 @@
 ;-----<PERTENENCIA>-----
 
 ;Descripción: Función que comprueba si una lista ingresada cumple con los requisitos para considerarla un repositorio local 
-;Dominio: Lista
+;Dominio: 'a type
 ;Recorrido: Booleano
 ;Recursión: Cola
 (define local-repository? (lambda (L)
@@ -50,10 +50,9 @@
 
 ;-----<SELECTORES>-----
 
-;Descripción: Función que obtiene un commit del repositorio local
-;Dominio: Una lista que representa el repositorio local y un entero n que representa la posición del commit (empieza del 0)
-;Recorrido: Lista que representa un commit
-;Recursión:
+;Descripción: Función que obtiene un commit del repositorio local (el ultimo commit agregado ocupa la posición 0)
+;Dominio: Entero X Local-Repository
+;Recorrido: Commit
 (define get-commit-local-repository (lambda (n L)
                                       (if (local-repository? L)
                                           (if (number? n)
@@ -65,11 +64,10 @@
 
 ;-----<MODIFICADORES>-----
 
-;Descripción: Funciónq ue agrega un commit a un repositorio local
-;Dominio: Lista representa un commit y una lista que representa un repositorio local
-;Recorrido: Una lista que representa un repositorio local con un commit agregado
-;Recursión:
-
+;Descripción: Función que agrega un commit a un repositorio local
+;Dominio: Commit X Local-Repository
+;Recorrido: Local-Repository
+;Recursión:Cola
 (define agregar-commit-local-repository (lambda (commit L)
                                           (define agregar-commit-local-repository-aux (lambda (commit L nuevo-L)
                                                                                         (if (null? L)

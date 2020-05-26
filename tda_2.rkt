@@ -10,9 +10,8 @@
 ;-----<CONSTRUCTOR>-----
 
 ;Descripción: Función que crea un index
-;Dominio: Uno o más strings, representando los archivos
-;Recorrido: Lista de archivos contenidos en el index
-;Recursión:
+;Dominio: String X ... X String
+;Recorrido: Index
 (define (index . archivo)
   (if (> (calcular-largo-lista archivo) 0)
       (if (aplicar-funcion-lista string? (calcular-largo-lista archivo) archivo)
@@ -23,9 +22,8 @@
 ;-----<PERTENENCIA>-----
 
 ;Descripción: Función que comprueba si una lista representa un index
-;Dominio: Lista L
+;Dominio: 'a type
 ;Recorrido: Booleano
-;Recursión:
 (define index? (lambda (L)
                  (if (list? L)
                      (if (null? L)
@@ -39,8 +37,8 @@
 
 
 ;Descripción: Función que obtiene un archivo en la posición n (elemento) del la lista que representa el index (lista). La lista comienza con la posición 0
-;Dominio: Entero n representando la posición de un archivo y lista L representando el index
-;Recorrido: String representando un archivo
+;Dominio: Entero X Index
+;Recorrido: String 
 ;Recursión: Cola
 (define get-archivo-index (lambda (n L)
                             (if (index? L)
@@ -52,8 +50,8 @@
 ;-----<MODIFICADORES>-----
 
 ;Descripción: Función que agrega un archivo al index
-;Dominio: String representando un archivo y lista representando el index
-;Recorrido: Lista representando el index
+;Dominio: String X Index
+;Recorrido: Index
 ;Recursión: Cola
 (define agregar-archivo-index (lambda (archivo L)
                                 (define agregar-archivo-index-aux (lambda (archivo L nuevo-L)
@@ -65,8 +63,8 @@
                                     -1)))
 
 ;Descripción: Función que elimina un archivo del index
-;Dominio: String representando un archivo y lista representando el index
-;Recorrido: Lista representando el index
+;Dominio: String X Index
+;Recorrido: Index
 ;Recursión: Cola
 (define eliminar-archivo-index (lambda (archivo L)
                                  (define eliminar-archivo-index-aux (lambda (archivo L nuevo-L)

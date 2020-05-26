@@ -8,10 +8,10 @@
 
 ;-----<CONSTRUCTOR>-----
 
-;Descripción: Función que crea un repositorio remoto
-;Dominio: lista de n argumentos de strings, donde el primer elemento representa la rama, el segundo el mensaje del commit y los demás los archivos que acompañan al commit
-;Recorrido: una lista que contiene un elemento y una lista
-;Recursión:
+;Descripción: Función que crea un repositorio remoto, donde el primer elemento representa la rama,
+;             el segundo el mensaje del commit y los demás los archivos que acompañan al commit
+;Dominio: String X ... X String
+;Recorrido: Remote-Repository
 (define (remote-repository rama . commit)
   (if (string? rama)
       (if (> (calcular-largo-lista commit) 1)
@@ -25,7 +25,7 @@
 ;-----<PERTENENCIA>-----
 
 ;Descripción: Función que comprueba si una lista ingresada cumple con los requisitos para considerarla un repositorio remoto
-;Dominio: Lista
+;Dominio: 'a type
 ;Recorrido: Booleano
 ;Recursión: Cola
 (define remote-repository? (lambda (L)
@@ -49,10 +49,9 @@
 
 ;-----<SELECTORES>-----
 
-;Descripción: Función que obtiene un commit del repositorio remoto
-;Dominio: Una lista que representa el repositorio remoto y un entero n que representa la posición del commit (el ultimo commit agregado ocupa la posición 0)
-;Recorrido: Lista que representa un commit
-;Recursión:
+;Descripción: Función que obtiene un commit del repositorio remoto (el ultimo commit agregado ocupa la posición 0)
+;Dominio: Entero X Remote-Repository
+;Recorrido: Commit
 (define get-commit-remote-repository (lambda (n L)
                                       (if (remote-repository? L)
                                           (if (number? n)
@@ -64,11 +63,10 @@
 
 ;-----<MODIFICADORES>-----
 
-;Descripción: Funciónq ue agrega un commit a un repositorio remoto
-;Dominio: Lista representa un commit y una lista que representa un repositorio remoto
-;Recorrido: Una lista que representa un repositorio remoto con un commit agregado
-;Recursión:
-
+;Descripción: Función que agrega un commit a un repositorio remoto
+;Dominio: Commit X Remote-Repository
+;Recorrido: Remote-Repository
+;Recursión: Cola
 (define agregar-commit-remote-repository (lambda (commit L)
                                           (define agregar-commit-remote-repository-aux (lambda (commit L nuevo-L)
                                                                                         (if (null? L)

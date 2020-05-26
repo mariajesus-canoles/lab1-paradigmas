@@ -14,9 +14,8 @@
 ;-----<CONSTRUCTOR>-----
 
 ;Descripción: Función que crea la zona de trabajo que contiene al workspace, index, local y remote repository
-;Dominio: Cuatro listas, donde la primera lista representa el workspace, la segunda el index, la tercera el local repository y la cuarta el remote repository
-;Recorrido: Una lista de cuatro listas
-;Recursión:
+;Dominio: Workspace X Index X Local-Repository X Remote-Repository
+;Recorrido: Zonas
 (define zonas (lambda (workspace index local-repository remote-repository)
                 (if (workspace? workspace)
                     (if (index? index)
@@ -32,9 +31,8 @@
 ;-----<PERTENENCIA>-----
 
 ;Descripción: Función que comprueba si una lista ingresada cumple con los requisitos para considerarse zonas
-;Dominio: Lista de listas
+;Dominio: 'a type
 ;Recorrido: Booleano
-;Recursión: 
 (define zonas? (lambda (L)
                  (if (list? L)
                      (if (null? L)
@@ -54,9 +52,8 @@
 ;-----<SELECTORES>-----
 
 ;Descripción: Función que obtiene el workspace de zonas
-;Dominio: Una lista de listas que representa zonas
-;Recorrido: Lista que representa el workspace
-;Recursión:
+;Dominio: Zonas
+;Recorrido: Workspace
 (define get-workspace-zonas (lambda (L)
                               (if (zonas? L)
                                   (car L)
@@ -64,9 +61,8 @@
 
 
 ;Descripción: Función que obtiene el index de zonas
-;Dominio: Una lista de listas que representa zonas
-;Recorrido: Lista que representa el index
-;Recursión:
+;Dominio: Zonas
+;Recorrido: Index
 (define get-index-zonas (lambda (L)
                           (if (zonas? L)
                               (cadr L)
@@ -74,9 +70,8 @@
 
 
 ;Descripción: Función que obtiene el local repository de zonas
-;Dominio: Una lista de listas que representa zonas
-;Recorrido: Lista que representa el local repository
-;Recursión:
+;Dominio: Zonas
+;Recorrido: Local-Repository
 (define get-local-repository-zonas (lambda (L)
                                      (if (zonas? L)
                                          (caddr L)
@@ -84,9 +79,8 @@
 
 
 ;Descripción: Función que obtiene el remote repository de zonas
-;Dominio: Una lista de listas que representa zonas
-;Recorrido: Lista que representa el remote repository
-;Recursión:
+;Dominio: Zonas
+;Recorrido: Remote-Repository
 (define get-remote-repository-zonas (lambda (L)
                                       (if (zonas? L)
                                           (cadddr L)
@@ -96,9 +90,8 @@
 ;-----<MODIFICADORES>-----
 
 ;Descripción: Función que modifica el workspace de las zonas
-;Dominio: Lista que representa el workspace y una lista de listas que representa las zonas
-;Recorrido: Una lista de listas que representa las zonas
-;Recursión:
+;Dominio: Workspace X Zonas
+;Recorrido: Zonas
 (define set-workspace-zonas (lambda (workspace L)
                               (if (zonas? L)
                                   (if (workspace? workspace)
@@ -108,9 +101,8 @@
 
 
 ;Descripción: Función que modifica el index de las zonas
-;Dominio: Lista que representa el index y una lista de listas que representa las zonas
-;Recorrido: Una lista de listas que representa las zonas
-;Recursión:
+;Dominio: Index X Zonas
+;Recorrido: Zonas
 (define set-index-zonas (lambda (index L)
                               (if (zonas? L)
                                   (if (index? index)
@@ -120,9 +112,8 @@
 
 
 ;Descripción: Función que modifica el local repository de las zonas
-;Dominio: Lista que representa el local repository y una lista de listas que representa las zonas
-;Recorrido: Una lista de listas que representa las zonas
-;Recursión:
+;Dominio: Local-Repository X Zonas
+;Recorrido: Zonas
 (define set-local-repository-zonas (lambda (local-repository L)
                               (if (zonas? L)
                                   (if (local-repository? local-repository)
@@ -132,9 +123,8 @@
 
 
 ;Descripción: Función que modifica el remote repository de las zonas
-;Dominio: Lista que representa el remote repository y una lista de listas que representa las zonas
-;Recorrido: Una lista de listas que representa las zonas
-;Recursión:
+;Dominio: Remote-Repository X Zonas
+;Recorrido: Zonas
 (define set-remote-repository-zonas (lambda (remote-repository L)
                               (if (zonas? L)
                                   (if (remote-repository? remote-repository)

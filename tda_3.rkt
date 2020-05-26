@@ -18,9 +18,9 @@
       (if (> (calcular-largo-lista commit) 1)
           (if (aplicar-funcion-lista string? (calcular-largo-lista commit) commit)
               (cons rama (cons commit null))
-              '())
-          '())
-      '()))
+              null)
+          null)
+      null))
 
 
 ;-----<PERTENENCIA>-----
@@ -58,9 +58,9 @@
                                           (if (number? n)
                                               (if (< n (calcular-largo-lista L))
                                                   (obtener-elemento-lista n (cdr L))
-                                                  -1)
-                                              -1)
-                                          -1)))
+                                                  null)
+                                              null)
+                                          null)))
 
 ;-----<MODIFICADORES>-----
 
@@ -76,9 +76,9 @@
                                           (if (local-repository? L)
                                               (if (> (calcular-largo-lista commit) 1)
                                                   (if (aplicar-funcion-lista string? (calcular-largo-lista commit) commit)
-                                                      (agregar-commit-local-repository-aux commit L '())
-                                                      -1)
-                                                  -1)
-                                              -1)))
+                                                      (agregar-commit-local-repository-aux commit L null)
+                                                      null)
+                                                  null)
+                                              null)))
                                               
                                                                                                                         

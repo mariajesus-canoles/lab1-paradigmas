@@ -1,5 +1,5 @@
 #lang racket
-
+;ej: (zonas '("archivo9" "archivo 8") '("archivo7" "archivo6") '("master" ("Tercer commit" "archivo3" "archivo3.5")) '("master" ("Primer commit" "archivo5") ("Segundo commit" "archivo4" "archivo4.5")))
 (require "listas.rkt")
 (require "tda_1.rkt")
 (require "tda_2.rkt")
@@ -22,10 +22,10 @@
                         (if (local-repository? local-repository)
                             (if (remote-repository? remote-repository)
                                 (cons workspace (cons index (cons local-repository (cons remote-repository null))))
-                                '())
-                            '())
-                        '())
-                    '())))
+                                null)
+                            null)
+                        null)
+                    null)))
 
 
 ;-----<PERTENENCIA>-----
@@ -57,7 +57,7 @@
 (define get-workspace-zonas (lambda (L)
                               (if (zonas? L)
                                   (car L)
-                                  -1)))
+                                  null)))
 
 
 ;Descripción: Función que obtiene el index de zonas
@@ -66,7 +66,7 @@
 (define get-index-zonas (lambda (L)
                           (if (zonas? L)
                               (cadr L)
-                              -1)))
+                              null)))
 
 
 ;Descripción: Función que obtiene el local repository de zonas
@@ -75,7 +75,7 @@
 (define get-local-repository-zonas (lambda (L)
                                      (if (zonas? L)
                                          (caddr L)
-                                         -1)))
+                                         null)))
 
 
 ;Descripción: Función que obtiene el remote repository de zonas
@@ -84,7 +84,7 @@
 (define get-remote-repository-zonas (lambda (L)
                                       (if (zonas? L)
                                           (cadddr L)
-                                          -1)))
+                                          null)))
 
 
 ;-----<MODIFICADORES>-----
@@ -96,8 +96,8 @@
                               (if (zonas? L)
                                   (if (workspace? workspace)
                                       (cons workspace (cons (get-index-zonas L) (cons (get-local-repository-zonas L) (cons (get-remote-repository-zonas L) null))))
-                                      -1)
-                                  -1)))
+                                      null)
+                                  null)))
 
 
 ;Descripción: Función que modifica el index de las zonas
@@ -107,8 +107,8 @@
                               (if (zonas? L)
                                   (if (index? index)
                                       (cons (get-workspace-zonas L) (cons index (cons (get-local-repository-zonas L) (cons (get-remote-repository-zonas L) null))))
-                                      -1)
-                                  -1)))
+                                      null)
+                                  null)))
 
 
 ;Descripción: Función que modifica el local repository de las zonas
@@ -118,8 +118,8 @@
                               (if (zonas? L)
                                   (if (local-repository? local-repository)
                                       (cons (get-workspace-zonas L) (cons (get-index-zonas L) (cons local-repository (cons (get-remote-repository-zonas L) null))))
-                                      -1)
-                                  -1)))
+                                      null)
+                                  null)))
 
 
 ;Descripción: Función que modifica el remote repository de las zonas
@@ -129,6 +129,6 @@
                               (if (zonas? L)
                                   (if (remote-repository? remote-repository)
                                       (cons (get-workspace-zonas L) (cons (get-index-zonas L) (cons (get-local-repository-zonas L) (cons remote-repository null))))
-                                      -1)
-                                  -1)))
+                                      null)
+                                  null)))
                                               

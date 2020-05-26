@@ -16,8 +16,8 @@
   (if (> (calcular-largo-lista archivo) 0)
       (if (aplicar-funcion-lista string? (calcular-largo-lista archivo) archivo)
           archivo
-          '())
-      '()))
+          null)
+      null))
      
 
 ;-----<PERTENENCIA>-----
@@ -47,7 +47,7 @@
                                     (if (= n 0)
                                         (car L)
                                         (get-archivo-workspace (- n 1) (cdr L)))
-                                    -1)))
+                                    null)))
                           
                           
 ;-----<MODIFICADORES>-----
@@ -62,8 +62,8 @@
                                                                       (agregar-elemento-final-lista archivo nuevo-L)
                                                                       (agregar-archivo-workspace-aux archivo (cdr L) (agregar-elemento-final-lista (car L) nuevo-L)))))
                                     (if (and (workspace? L) (string? archivo))
-                                        (agregar-archivo-workspace-aux archivo L '())
-                                        -1)))
+                                        (agregar-archivo-workspace-aux archivo L null)
+                                        null)))
 
 ;Descripción: Función que elimina un archivo del workspace
 ;Dominio: String x Workspace
@@ -77,7 +77,7 @@
                                                                             (agregar-lista-final-lista (cdr L) nuevo-L))
                                                                         (eliminar-archivo-workspace-aux archivo (cdr L) (agregar-elemento-final-lista (car L) nuevo-L)))))
                                      (if (and (workspace? L) (elemento-en-lista archivo L))
-                                         (eliminar-archivo-workspace-aux archivo L '())
-                                         -1)))
+                                         (eliminar-archivo-workspace-aux archivo L null)
+                                         null)))
                                                              
                                                                              

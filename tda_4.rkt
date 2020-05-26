@@ -1,7 +1,7 @@
 #lang racket
 (require "listas.rkt")
 (provide (all-defined-out))
-
+;ej: '("master" ("Primer commit" "archivo5") ("Segundo commit" "archivo4" "archivo4.5"))
 ; ----------------------- < TDA REMOTE REPOSITORY > -----------------------
 
 
@@ -17,9 +17,9 @@
       (if (> (calcular-largo-lista commit) 1)
           (if (aplicar-funcion-lista string? (calcular-largo-lista commit) commit)
               (cons rama (cons commit null))
-              '())
-          '())
-      '()))
+              null)
+          null)
+      null))
 
 
 ;-----<PERTENENCIA>-----
@@ -57,9 +57,11 @@
                                           (if (number? n)
                                               (if (< n (calcular-largo-lista L))
                                                   (obtener-elemento-lista n (cdr L))
-                                                  -1)
-                                              -1)
-                                          -1)))
+                                                  null)
+                                              null)
+                                          null)))
+
+
 
 ;-----<MODIFICADORES>-----
 
@@ -75,8 +77,8 @@
                                           (if (remote-repository? L)
                                               (if (> (calcular-largo-lista commit) 1)
                                                   (if (aplicar-funcion-lista string? (calcular-largo-lista commit) commit)
-                                                      (agregar-commit-remote-repository-aux commit L '())
-                                                      -1)
-                                                  -1)
-                                              -1)))
+                                                      (agregar-commit-remote-repository-aux commit L null)
+                                                      null)
+                                                  null)
+                                              null)))
                                               

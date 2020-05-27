@@ -62,6 +62,8 @@
                                     (agregar-archivo-index-aux archivo L null)
                                     null)))
 
+
+
 ;Descripción: Función que elimina un archivo del index
 ;Dominio: String X Index
 ;Recorrido: Index

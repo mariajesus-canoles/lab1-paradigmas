@@ -110,6 +110,16 @@
                                       null)
                                   null)))
 
+;Descripcion: Funcion que agrega archivos al index
+;Dominio: Lista Strings X Zonas
+;Recorrido: Zonas
+(define agregar-archivos-index-zonas (lambda (archivos L)
+                                       (if (zonas? L)
+                                           (if (index? archivos)
+                                               (cons (get-workspace-zonas L) (cons (agregar-lista-final-lista archivos (get-index-zonas L)) (cons (get-local-repository-zonas L) (cons (get-remote-repository-zonas L) null))))
+                                               null)
+                                           null)))
+
 
 ;Descripción: Función que modifica el local repository de las zonas
 ;Dominio: Local-Repository X Zonas

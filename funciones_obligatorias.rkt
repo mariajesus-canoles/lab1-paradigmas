@@ -12,31 +12,54 @@
 ;Dominio:
 ;Recorrido:
 (define git (lambda (comando)
-              (lambda (zonas)
+              ;(lambda (zonas)
                 (if (equal? comando pull)
-                    (pull zonas)
+                    pull
                     (if (equal? comando "add")
                         -1
                         (if (equal? comando "commit")
                             -1
                             (if (equal? comando "push")
                                 -1
-                                '("error"))))))))
+                                '("error")))))));)
 
-;Descripcion: Función que trae el contenido del remote repository al workspace
+;Descripcion: Función que trae el contenido del remote repository al workspace (reemplaza)
 ;Dominio: Zonas
 ;Recorrido: Zonas
 ;Recursion: Cola
 (define pull (lambda (zonas)
                (define pull-aux (lambda (zonas remote-repository archivos)
                                   (if (null? remote-repository)
-                                      (cons archivos (cons (get-index-zonas zonas) (cons (get-local-repository-zonas zonas) (cons (get-remote-repository-zonas zonas) null))))
+                                      (set-workspace-zonas archivos zonas)
                                       (pull-aux zonas (cdr remote-repository) (agregar-lista-final-lista (cdr (car remote-repository)) archivos)))))
                (if (zonas? zonas)
                    (pull-aux zonas (cdr (get-remote-repository-zonas zonas)) null)
                    null)))
 ;(pull zonas1)
+
+
+;Descripción: Función que agrega los cambios del Workspace al Index
+;Dominio: Lista String o Null X Zonas
+;Recorrido: Zonas
+;Recursión: Natural
+(define add (lambda (archivos)
+              (lambda (zonas)
+                (if (equal? archivos null)
+                    (agregar-archivos-index-zonas (get-workspace-zonas zonas) zonas)
+                    (if (null? archivos)
+                        zonas
+                        ((add (cdr archivos)) (agregar-archivos-index-zonas archivos zonas)))))))
+
+;archivos-en-workspace
+                    
+                    
                                   
                
-               
+
+
+
+
+
+
+                
                       

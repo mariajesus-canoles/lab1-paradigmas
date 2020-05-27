@@ -1,5 +1,5 @@
 #lang racket
-
+;(define w (workspace "archivo1" "archivo2" "archivo3"))
 (require "listas.rkt")
 (provide (all-defined-out))
 
@@ -79,5 +79,28 @@
                                      (if (and (workspace? L) (elemento-en-lista archivo L))
                                          (eliminar-archivo-workspace-aux archivo L null)
                                          null)))
+
+;-----<OTRAS FUNCIONES>-----
+
+(define archivos-en-workspace (lambda (archivos L)
+                                (if (workspace? L)
+                                    (if (null? archivos)
+                                        #t
+                                        (if (elemento-en-lista (car archivos) L)
+                                            (archivos-en-workspace (cdr archivos) L)
+                                            #f))
+                                    null)))
+
+
+
+
+
+
+
+
+
+
+
+
                                                              
                                                                              

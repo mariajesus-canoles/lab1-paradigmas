@@ -7,12 +7,12 @@
 (require "tda_4.rkt")
 (require "tda_5.rkt")
 (provide (all-defined-out))
+(require racket/date)
 
-;Descripcion:
-;Dominio:
-;Recorrido:
+;Descripcion: Función que permite aplicar los comandos en git 
+;Dominio: Función
+;Recorrido: Función
 (define git (lambda (comando)
-              ;(lambda (zonas)
                 (if (equal? comando pull)
                     pull
                     (if (equal? comando "add")
@@ -21,22 +21,22 @@
                             -1
                             (if (equal? comando "push")
                                 -1
-                                '("error")))))));)
+                                (list "error")))))))
 
-;Descripcion: Función que trae el contenido del remote repository al workspace (reemplaza)
+;Descripcion: Función que trae el contenido del remote repository al workspace 
 ;Dominio: Zonas
 ;Recorrido: Zonas
 ;Recursion: Cola
 (define pull (lambda (zonas)
-               (define pull-aux (lambda (zonas remote-repository archivos)
+               (define pull-aux (lambda (inf zonas remote-repository archivos)
                                   (if (null? remote-repository)
-                                      (set-workspace-zonas archivos zonas)
-                                      (pull-aux zonas (cdr remote-repository) (agregar-lista-final-lista (cdr (car remote-repository)) archivos)))))
+                                      (list (agregar-elemento-final-lista (cons "PULL" (date->string (current-date) second)) inf) (set-workspace-zonas (agregar-lista-final-lista archivos (get-workspace-zonas zonas)) zonas))
+                                      (pull-aux inf zonas (cdr remote-repository) (agregar-lista-final-lista (cdr (car remote-repository)) archivos)))))
                (if (zonas? zonas)
-                   (pull-aux zonas (cdr (get-remote-repository-zonas zonas)) null)
-                   null)))
-;(pull zonas1)
-
+                   (pull-aux null zonas (cdr (get-remote-repository-zonas zonas)) null)
+                   (if (zonas? (car (cdr zonas)))
+                       (pull-aux (car zonas) (car (cdr zonas)) (cdr (get-remote-repository-zonas (car (cdr zonas)))) null)
+                       null))))
 
 ;Descripción: Función que agrega los cambios del Workspace al Index
 ;Dominio: Lista String o Null X Zonas

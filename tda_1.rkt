@@ -82,6 +82,8 @@
 
 ;-----<OTRAS FUNCIONES>-----
 
+
+;Dom: Lista archivos X Workspace
 (define archivos-en-workspace (lambda (archivos L)
                                 (if (workspace? L)
                                     (if (null? archivos)

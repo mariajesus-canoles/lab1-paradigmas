@@ -78,3 +78,16 @@
                                  (if (and (index? L) (elemento-en-lista archivo L))
                                      (eliminar-archivo-index-aux archivo L null)
                                      null)))
+
+;-----<MODIFICADORES>-----
+;Recorrido: Boolean
+(define archivo-en-index (lambda (archivo index)
+                               (elemento-en-lista archivo index)))
+
+
+
+
+
+
+
+                               

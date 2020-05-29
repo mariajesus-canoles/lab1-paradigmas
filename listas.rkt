@@ -55,6 +55,9 @@
 (define agregar-elemento-final-lista (lambda (elemento L)
                                        (append L (list elemento))))
 
+(define agregar-elemento-principio-lista (lambda (elemento L)
+                                           (append (list elemento) L)))
+
 
 ;Descripción: Función que agrega una lista aux a una lista
 ;Dominio: Dos listas
@@ -88,6 +91,9 @@
                                  (if (= n 0)
                                      (car L)
                                      (obtener-elemento-lista (- n 1) (cdr L)))))
+
+
+
                              
 
 

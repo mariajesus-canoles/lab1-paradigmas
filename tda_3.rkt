@@ -50,17 +50,13 @@
 
 ;-----<SELECTORES>-----
 
-;Descripción: Función que obtiene un commit del repositorio local (el ultimo commit agregado ocupa la posición 0)
+;Descripción: Función que obtiene el ultimo commit agregado al repositorio local 
 ;Dominio: Entero X Local-Repository
 ;Recorrido: Commit
-(define get-commit-local-repository (lambda (n L)
+(define get-commit-local-repository (lambda (L)
                                       (if (local-repository? L)
-                                          (if (number? n)
-                                              (if (< n (calcular-largo-lista L))
-                                                  (obtener-elemento-lista n (cdr L))
-                                                  null)
-                                              null)
-                                          null)))
+                                                  (obtener-elemento-lista (- (calcular-largo-lista (cdr L)) 1) (cdr L))
+                                                  null)))
 
 ;-----<MODIFICADORES>-----
 

@@ -4,7 +4,7 @@
 
 ;Descripción: Función que calcula el largo de una lista
 ;Dominio: Lista 
-;Recorrido: Entero + {0}
+;Recorrido: Entero 
 ;Recursión: Cola
 (define calcular-largo-lista (lambda (L)
                                (define calcular-largo-lista-aux (lambda (L n)
@@ -47,14 +47,16 @@
                                                   #f))))
                                           
 
-
 ;Descripción: Función que agrega un elemento al final de una lista
 ;Dominio: String o Entero X Lista
 ;Recorrido: Lista
-;Recursión:
 (define agregar-elemento-final-lista (lambda (elemento L)
                                        (append L (list elemento))))
 
+
+;Descripción: Función que agrega un elemento al principio de una lista
+;Dominio: String o Entero X Lista
+;Recorrido: Lista
 (define agregar-elemento-principio-lista (lambda (elemento L)
                                            (append (list elemento) L)))
 
@@ -93,7 +95,14 @@
                                      (obtener-elemento-lista (- n 1) (cdr L)))))
 
 
-
+;Descripción: Función que invierte una lista
+;Dominio: Lista X Lista o Null
+;Recorrido: Lista
+;Recursión: Cola
+(define invertir-lista (lambda (lista lista-aux)
+                        (if (null? lista)
+                            lista-aux
+                            (invertir-lista (cdr lista) (cons (car lista) lista-aux)))))
                              
 
 

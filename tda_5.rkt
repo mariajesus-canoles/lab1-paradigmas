@@ -141,4 +141,23 @@
                                       (cons (get-workspace-zonas L) (cons (get-index-zonas L) (cons (get-local-repository-zonas L) (cons remote-repository null))))
                                       null)
                                   null)))
-                                              
+
+
+
+
+
+
+(define verificar-cambios-repositorys (lambda (local remote commits)
+                                        (if (null? local)
+                                            commits
+                                            (if (elemento-en-lista (car local) remote)
+                                                (verificar-cambios-repositorys (cdr local) remote commits)
+                                                (verificar-cambios-repositorys (cdr local) remote (agregar-elemento-final-lista (car local) commits))))))
+
+
+
+
+
+
+
+                                        

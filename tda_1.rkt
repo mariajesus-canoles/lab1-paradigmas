@@ -1,5 +1,7 @@
 #lang racket
+
 ;(define w (workspace "archivo1" "archivo2" "archivo3"))
+
 (require "listas.rkt")
 (provide (all-defined-out))
 
@@ -33,21 +35,7 @@
                                  #t
                                  #f))
                          #f)))
-                         
 
-;-----<SELECTORES>-----
-
-
-;Descripción: Función que obtiene un archivo de la posición n (elemento) de unworkspace. El workspace comienza con la posición 0
-;Dominio: Entero X Workspace
-;Recorrido: String 
-;Recursión: Cola
-(define get-archivo-workspace (lambda (n L)
-                                (if (workspace? L)
-                                    (if (= n 0)
-                                        (car L)
-                                        (get-archivo-workspace (- n 1) (cdr L)))
-                                    null)))
                           
                           
 ;-----<MODIFICADORES>-----
@@ -82,8 +70,10 @@
 
 ;-----<OTRAS FUNCIONES>-----
 
-
-;Dom: Lista archivos X Workspace
+;Descipción: Función que comprueba si los archivos se encuentran en el Workspace
+;Dominio: Lista Strings X Workspace
+;Recorrido: Boolean
+;Recursión: Cola
 (define archivos-en-workspace (lambda (archivos L)
                                 (if (workspace? L)
                                     (if (null? archivos)

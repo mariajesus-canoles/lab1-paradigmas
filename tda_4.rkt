@@ -82,8 +82,8 @@
                                                   null)
                                               null)))
 
-;Descripcion: Funcion que agrega muchos commits a un repositorio remoto
-;Dominio: Commits X Remote-Repository
+;Descripcion: Funcion que agrega commits a un repositorio remoto
+;Dominio: Lista de Listas Strings X Remote-Repository
 ;Recorrido: Remote-Repository
 (define agregar-commits-remote-repository (lambda (commits L)
                                             (if (null? commits)

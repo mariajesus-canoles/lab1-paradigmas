@@ -33,19 +33,7 @@
                              #f))
                      #f)))
 
-;-----<SELECTORES>-----
 
-
-;Descripción: Función que obtiene un archivo en la posición n (elemento) del la lista que representa el index (lista). La lista comienza con la posición 0
-;Dominio: Entero X Index
-;Recorrido: String 
-;Recursión: Cola
-(define get-archivo-index (lambda (n L)
-                            (if (index? L)
-                                (if (= n 0)
-                                    (car L)
-                                    (get-archivo-index (- n 1) (cdr L)))
-                                null)))
 
 ;-----<MODIFICADORES>-----
 
@@ -79,7 +67,10 @@
                                      (eliminar-archivo-index-aux archivo L null)
                                      null)))
 
-;-----<MODIFICADORES>-----
+;-----<OTRAS FUNCIONES>-----
+
+;Descripción: Función que comprueba si un archivo se encuentra en el Index
+;Dominio: String
 ;Recorrido: Boolean
 (define archivo-en-index (lambda (archivo index)
                                (elemento-en-lista archivo index)))

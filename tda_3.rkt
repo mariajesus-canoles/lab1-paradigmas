@@ -58,6 +58,17 @@
                                                   (obtener-elemento-lista (- (calcular-largo-lista (cdr L)) 1) (cdr L))
                                                   null)))
 
+;Descripcion: Funcion que obtiene los archivos del local repository
+;Dominio: Local-Repository X Lista Strings o Null
+;Recorrido: Lista Strings
+;Recursion: Cola
+(define archivos-local-repository (lambda (L nuevo-L)
+                                    (if (null? L)
+                                        nuevo-L
+                                        (archivos-local-repository (cdr L) (agregar-lista-final-lista (cdr (car L)) nuevo-L)))))
+
+
+
 ;-----<MODIFICADORES>-----
 
 ;Descripción: Función que agrega un commit a un repositorio local
@@ -76,5 +87,11 @@
                                                       null)
                                                   null)
                                               null)))
-                                              
 
+
+
+
+
+
+
+                                    

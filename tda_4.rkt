@@ -49,7 +49,7 @@
 
 ;-----<SELECTORES>-----
 
-;Descripción: Función que obtiene un commit del repositorio remoto (el ultimo commit agregado ocupa la posición 0)
+;Descripción: Función que obtiene un commit del repositorio remoto 
 ;Dominio: Entero X Remote-Repository
 ;Recorrido: Commit
 (define get-commit-remote-repository (lambda (n L)
@@ -60,6 +60,16 @@
                                                   null)
                                               null)
                                           null)))
+
+
+;Descripción: Funcion que obtiene los ultimos n commits en el remote repository
+;Dominio: Entero X Lista Strings X Lista Strings o Null
+;Recorrido: Lista Strings
+;Recursion: Cola
+(define get-commits-remote-repository (lambda (n L nuevo-L)
+                                        (if (= n 0)
+                                            nuevo-L
+                                            (get-commits-remote-repository (- n 1) (cdr L) (agregar-elemento-final-lista (car L) nuevo-L)))))
 
 
 

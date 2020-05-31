@@ -76,6 +76,17 @@
                                (elemento-en-lista archivo index)))
 
 
+;Descipción: Función que entrega una nueva lista con los archivos que se encuentran en el Index y no se han agregado al Local-Repository
+;Dominio: Lista Strings X Index X Lista Strings o Null
+;Recorrido: Lista Strings o Null
+;Recursión: Cola
+(define archivos-en-index (lambda (archivos archivos-aux L)
+                            (if (null? archivos)
+                                L
+                                (if (elemento-en-lista (car archivos) archivos-aux)
+                                    (archivos-en-index (cdr archivos) archivos-aux L)
+                                    (archivos-en-index (cdr archivos) archivos-aux (agregar-elemento-final-lista (car archivos) L))))))
+
 
 
 

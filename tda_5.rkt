@@ -142,11 +142,20 @@
                                       null)
                                   null)))
 
+;Descripción: Función que modifica los repositorys de las zonas
+;Dominio: Repository X Zonas
+;Recorrido: Zonas
+(define set-repository-zonas (lambda (repository L)
+                                (if (zonas? L)
+                                    (cons (get-workspace-zonas L) (cons (get-index-zonas L) (cons repository (cons repository null))))
+                                    null)))
 
+;-----<OTRAS FUNCIONES>-----
 
-
-
-
+;Descripcion: Función que comprueba si existen cambios en los repositorios
+;Dominio: Local-Repository X Remote-Repository X Lista String o Null
+;Recorrido: Lista String o Null
+;Recursion: Cola
 (define verificar-cambios-repositorys (lambda (local remote commits)
                                         (if (null? local)
                                             commits

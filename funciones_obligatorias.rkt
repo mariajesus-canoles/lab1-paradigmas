@@ -15,6 +15,8 @@
 (require racket/date)
 
 
+; ----------------------- < FUNCIONES OBLIGATORIAS > -----------------------
+
 ;Descripción: Función que permite aplicar los comandos en git 
 ;Dominio: Comando
 ;Recorrido: Función
@@ -27,7 +29,13 @@
                             commit
                             (if (equal? comando push)
                                 push
-                                null))))))
+                                (if (equal? comando status)
+                                    status
+                                    (if (equal? comando log)
+                                        log
+                                        (if (equal? comando branch)
+                                            branch
+                                            null)))))))))
 
 
 ;Descripción: Función auxiliar de la función "pull"
@@ -172,17 +180,97 @@
                         (if (zonas? zonas)
                             (string-append "\n\n══════════════«  WORKSPACE  »═══════════════\n\n" (zonas->string-aux (car zonas))
                                            "\n\n════════════════«  INDEX  »═════════════════\n\n" (zonas->string-aux (cadr zonas))
-                                           "\n\n═══════════«  LOCAL REPOSITORY  »═══════════\n\n" "RAMA: " (car (caddr zonas)) (zonas->string-aux2 (invertir-lista (cdr (caddr zonas)) null) "")
-                                           "\n\n══════════«  REMOTE REPOSITORY  »═══════════\n\n" "RAMA: " (car (cadddr zonas)) (zonas->string-aux2 (invertir-lista (cdr (cadddr zonas)) null) ""))
+                                           "\n\n═══════════«  LOCAL REPOSITORY  »═══════════" (zonas->string-aux2 (invertir-lista (cdr (caddr zonas)) null) "")
+                                           "\n\n══════════«  REMOTE REPOSITORY  »═══════════" (zonas->string-aux2 (invertir-lista (cdr (cadddr zonas)) null) ""))
                             (if (zonas? (cadr zonas))
                                 (string-append "\n\n══════════════«  WORKSPACE  »═══════════════\n\n" (zonas->string-aux (car (cadr zonas)))
                                                "\n\n════════════════«  INDEX  »═════════════════\n\n" (zonas->string-aux (cadr (cadr zonas)))
-                                               "\n\n═══════════«  LOCAL REPOSITORY  »═══════════\n\n" "RAMA: " (car (caddr (cadr zonas))) (zonas->string-aux2 (invertir-lista (cdr (caddr (cadr zonas))) null) "")
-                                               "\n\n══════════«  REMOTE REPOSITORY  »═══════════\n\n" "RAMA: " (car (cadddr (cadr zonas))) (zonas->string-aux2 (invertir-lista (cdr (cadddr (cadr zonas))) null) "")
+                                               "\n\n═══════════«  LOCAL REPOSITORY  »═══════════" (zonas->string-aux2 (invertir-lista (cdr (caddr (cadr zonas))) null) "")
+                                               "\n\n══════════«  REMOTE REPOSITORY  »═══════════" (zonas->string-aux2 (invertir-lista (cdr (cadddr (cadr zonas))) null) "")
                                                "\n\n══════════«  HISTORY COMMANDS  »════════════\n\n" (zonas->string-aux4 (invertir-lista (car zonas) null) "") "\n\n")
                                 null))))
                                                
  
                                                             
                                                      
+
+; ----------------------- < FUNCIONES EXTRAS > -----------------------
+
+
+
+;Descripción: Función que retorna un string con la información del ambiente de trabajo
+;Dominio: Zonas
+;Recorrido: String
+(define status (lambda (zonas)
+                 (if (zonas? zonas)
+                     (string-append "ARCHIVOS AGREGADOS AL INDEX:\n"
+                                    (if (null? (archivos-en-index (cadr zonas) (archivos-local-repository (cdr (caddr zonas)) null) null))
+                                        "No se han agregado nuevos archivos al Index"
+                                        (zonas->string-aux (archivos-en-index (cadr zonas) (archivos-local-repository (cdr (caddr zonas)) null) null)))
+                                    "\n\nCANTIDAD DE COMMITS EN EL LOCAL REPOSITORY:\n"
+                                    (if (null? (verificar-cambios-repositorys (cdr (caddr zonas)) (cdr (cadddr zonas)) null))
+                                        "No se han agregado commits en el Local Repository"
+                                        (number->string (calcular-largo-lista (verificar-cambios-repositorys (cdr (caddr zonas)) (cdr (cadddr zonas)) null))))
+                                    "\n\nRAMA ACTUAL DEL LOCAL REPOSITORY:\n" (car (caddr zonas)) "\n")
+                     (if (zonas? (cadr zonas))
+                         (string-append "ARCHIVOS AGREGADOS AL INDEX:\n"
+                                        (if (null? (archivos-en-index (cadr (cadr zonas)) (archivos-local-repository (cdr (caddr (cadr zonas))) null) null))
+                                            "No se han agregado nuevos archivos al Index"
+                                            (zonas->string-aux (archivos-en-index (cadr (cadr zonas)) (archivos-local-repository (cdr (caddr (cadr zonas))) null) null)))
+                                        "\n\nCANTIDAD DE COMMITS EN EL LOCAL REPOSITORY:\n"
+                                        (if (null? (verificar-cambios-repositorys (cdr (caddr (cadr zonas))) (cdr (cadddr (cadr zonas))) null))
+                                            "No se han agregado commits en el Local Repository"
+                                            (number->string (calcular-largo-lista (verificar-cambios-repositorys (cdr (caddr (cadr zonas))) (cdr (cadddr (cadr zonas))) null))))
+                                        "\n\nRAMA ACTUAL DEL LOCAL REPOSITORY:\n" (car (caddr (cadr zonas))) "\n")
+                         null))))
+
+
+;Descripcion: Funcion auxiliar de la funcion "log" 
+;Dominio: Lista String X Entero X String
+;Recorrido: String
+;Recursion: Cola
+(define log-aux (lambda (commits n texto)
+                  (if (= n 0)
+                      texto
+                      (log-aux (cdr commits) (- n 1) (string-append texto (car (car commits)) "\n")))))
                       
+
+;Descripcion: Función que genera un string con los ultimos 5 commits
+;Dominio: Zonas
+;Recorrido: String
+(define log (lambda (zonas)
+              (if (zonas? zonas)
+                  (if (>= (calcular-largo-lista (cdr (get-remote-repository-zonas zonas))) 5)
+                      (string-append "Los últimos 5 commits sobre el repositorio son:\n"
+                                     (log-aux (get-commits-remote-repository 5 (invertir-lista (cdr (get-remote-repository-zonas zonas)) null) null) 5 ""))
+                      (string-append "\nLos commits almacenados en el repositorio son menores que 5\n"))
+                  (if (zonas? (cadr zonas))
+                      (if (>= (calcular-largo-lista (cdr (get-remote-repository-zonas (cadr zonas)))) 5)
+                          (string-append "Los últimos 5 commits sobre el repositorio son:\n"
+                                         (log-aux (get-commits-remote-repository 5 (invertir-lista (cdr (get-remote-repository-zonas (cadr zonas))) null) null) 5 ""))
+                          (string-append "\nLos commits almacenados en el repositorio son menores que 5\n"))
+                      null))))
+                      
+
+;Descripcion:                  
+;Dominio:
+;Recorrido:  
+(define branch-aux (lambda (inf repository zonas)
+                     (list (agregar-elemento-final-lista (cons "BRANCH" (date->string (current-date) second)) inf) (set-repository-zonas repository zonas))))
+
+
+;Descripcion:                  
+;Dominio:
+;Recorrido:               
+(define branch (lambda (nombre-rama)
+                 (lambda (zonas)
+                   (if (zonas? zonas)
+                       (branch-aux null (list nombre-rama (get-commit-remote-repository (- (calcular-largo-lista (cdr (get-remote-repository-zonas zonas))) 1) (get-remote-repository-zonas zonas))) zonas)
+                       (if (zonas? (cadr zonas))
+                           (branch-aux (car zonas) (list nombre-rama (get-commit-remote-repository (- (calcular-largo-lista (cdr (get-remote-repository-zonas (cadr zonas)))) 1) (get-remote-repository-zonas (cadr zonas)))) (cadr zonas))
+                           null)))))
+                           
+                       
+
+
+

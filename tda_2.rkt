@@ -1,5 +1,6 @@
 #lang racket
 
+
 (require "listas.rkt")
 (provide (all-defined-out))
 
@@ -19,9 +20,10 @@
           null)
       null))
 
+
 ;-----<PERTENENCIA>-----
 
-;Descripción: Función que comprueba si una lista representa un index
+;Descripción: Función que comprueba si el elemento ingresado representa un index
 ;Dominio: 'a type
 ;Recorrido: Booleano
 (define index? (lambda (L)
@@ -32,7 +34,6 @@
                              #t
                              #f))
                      #f)))
-
 
 
 ;-----<MODIFICADORES>-----
@@ -51,7 +52,6 @@
                                     null)))
 
 
-
 ;Descripción: Función que elimina un archivo del index
 ;Dominio: String X Index
 ;Recorrido: Index
@@ -66,6 +66,7 @@
                                  (if (and (index? L) (elemento-en-lista archivo L))
                                      (eliminar-archivo-index-aux archivo L null)
                                      null)))
+
 
 ;-----<OTRAS FUNCIONES>-----
 
@@ -88,8 +89,4 @@
                                     (archivos-en-index (cdr archivos) archivos-aux (agregar-elemento-final-lista (car archivos) L))))))
 
 
-
-
-
-
-                               
+                              

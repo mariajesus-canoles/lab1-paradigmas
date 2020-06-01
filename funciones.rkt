@@ -1,17 +1,11 @@
 #lang racket
 
-
-;(define zonas1 '(("archivo9" "archivo 8") ("archivo7" "archivo6") ("master" ("Tercer commit" "archivo3" "archivo3.5") ("Cuarto commit" "archivo23")) ("master" ("Primer commit" "archivo5") ("Segundo commit" "archivo4" "archivo4.5"))))
-;'((("PULL" . "Friday, May 29th, 2020 6:47:13pm") ("COMMIT" . "Friday, May 29th, 2020 6:48:43pm"))(("archivo9" "archivo 8" "archivo5" "archivo4" "archivo4.5") ("archivo7" "archivo6")("master" ("Tercer commit" "archivo3" "archivo3.5") ("Cuarto commit" "archivo23"))("master" ("Primer commit" "archivo5") ("Segundo commit" "archivo4" "archivo4.5") ("Tercer commit" "archivo3" "archivo3.5") ("Cuarto commit" "archivo23"))))
-
-
 (require "listas.rkt")
 (require "tda_1.rkt")
 (require "tda_2.rkt")
 (require "tda_3.rkt")
 (require "tda_4.rkt")
 (require "tda_5.rkt")
-(provide (all-defined-out))
 (require racket/date)
 
 
@@ -38,7 +32,7 @@
                                             null)))))))))
 
 
-;Descripción: Función auxiliar de la función "pull"
+;Descripción: Función auxiliar de la función "pull". Crea la nueva zona con el historial del comando aplicado
 ;Dominio: Lista Strings o Null X Zonas X Remote-Repository X Lista Strings
 ;Recorrido: Zonas
 ;Recursión: Cola
@@ -60,7 +54,7 @@
                        null))))
 
 
-;Descripción: Función auxiliar de la función "add"
+;Descripción: Función auxiliar de la función "add". Agrega los archivos ingresados al Index
 ;Dominio: Lista String o Null X Index
 ;Recorrido: Zonas
 ;Recursión: Natural
@@ -95,7 +89,7 @@
                         null)))))
 
 
-;Descripción: Función auxiliar de la función "commit"
+;Descripción: Función auxiliar de la función "commit". Crea una nueva zona con el historial del comando aplicado
 ;Dominio: Lista o Null X String X Zonas
 ;Recorrido: Zonas
 (define commit-aux (lambda (inf mensaje zonas)
@@ -117,7 +111,7 @@
                        null))))
 
 
-;Descripción: Función auxiliar de la función "push"
+;Descripción: Función auxiliar de la función "push".Crea una nueva zona con el historial del comando aplicado
 ;Dominio: Lista o Null X Zonas
 ;Recorrido: Zonas
 (define push-aux (lambda (inf zonas)
@@ -125,7 +119,7 @@
                    (set-remote-repository-zonas (agregar-commits-remote-repository (verificar-cambios-repositorys (cdr (caddr zonas)) (cdr (cadddr zonas)) null) (get-remote-repository-zonas zonas)) zonas))))
                    
 
-;Descripción: Función que envia los commits al local repository
+;Descripción: Función que envia los commits del index al local repository
 ;Dominio: Zonas
 ;Recorrido: Zonas
 (define push (lambda (zonas)
@@ -136,7 +130,7 @@
                        null))))
 
 
-;Descripcion: Función auxiliar de la función "zonas->string"
+;Descripcion: Función auxiliar de la función "zonas->string". Crea un string con la lista ingresada agregando saltos de linea
 ;Dominio: Lista String
 ;Recorrido: String
 ;Recursion: Cola
@@ -146,7 +140,7 @@
                                 (string-append (car L) "\n" (zonas->string-aux (cdr L))))))
 
 
-;Descripcion: Función auxiliar 2 de la función "zonas->string"
+;Descripcion: Función auxiliar 2 de la función "zonas->string". Crea un string con la lista ingresada agregando saltos de linea que añade a un texto 
 ;Dominio: Lista String X Sring
 ;Recorrido: String
 ;Recursion: Cola
@@ -156,14 +150,14 @@
                                  (zonas->string-aux2 (cdr L) (string-append texto "\n\n" (zonas->string-aux (car L)))))))
 
 
-;Descripcion: Función auxiliar 3 de la función "zonas->string"
+;Descripcion: Función auxiliar 3 de la función "zonas->string". Crea un string con el comando aplicado
 ;Dominio: Lista String 
 ;Recorrido: String                            
 (define zonas->string-aux3 (lambda (L)
                              (string-append "{" (cdr L) "} se aplica el comando " (car L) "\n")))
 
 
-;Descripcion: Función auxiliar 4 de la función "zonas->string"
+;Descripcion: Función auxiliar 4 de la función "zonas->string". Crea un string con la lista ingresada agregando saltos de linea que añade a un texto 
 ;Dominio: Lista String X String
 ;Recorrido: String
 ;Recursion: Cola
@@ -191,7 +185,9 @@
                                 null))))
                                                
  
-                                                            
+
+
+
                                                      
 
 ; ----------------------- < FUNCIONES EXTRAS > -----------------------
@@ -207,9 +203,9 @@
                                     (if (null? (archivos-en-index (cadr zonas) (archivos-local-repository (cdr (caddr zonas)) null) null))
                                         "No se han agregado nuevos archivos al Index"
                                         (zonas->string-aux (archivos-en-index (cadr zonas) (archivos-local-repository (cdr (caddr zonas)) null) null)))
-                                    "\n\nCANTIDAD DE COMMITS EN EL LOCAL REPOSITORY:\n"
+                                    "\n\nCANTIDAD DE NUEVOS COMMITS EN EL LOCAL REPOSITORY:\n"
                                     (if (null? (verificar-cambios-repositorys (cdr (caddr zonas)) (cdr (cadddr zonas)) null))
-                                        "No se han agregado commits en el Local Repository"
+                                        "No se han agregado nuevos commits en el Local Repository"
                                         (number->string (calcular-largo-lista (verificar-cambios-repositorys (cdr (caddr zonas)) (cdr (cadddr zonas)) null))))
                                     "\n\nRAMA ACTUAL DEL LOCAL REPOSITORY:\n" (car (caddr zonas)) "\n")
                      (if (zonas? (cadr zonas))
@@ -217,15 +213,15 @@
                                         (if (null? (archivos-en-index (cadr (cadr zonas)) (archivos-local-repository (cdr (caddr (cadr zonas))) null) null))
                                             "No se han agregado nuevos archivos al Index"
                                             (zonas->string-aux (archivos-en-index (cadr (cadr zonas)) (archivos-local-repository (cdr (caddr (cadr zonas))) null) null)))
-                                        "\n\nCANTIDAD DE COMMITS EN EL LOCAL REPOSITORY:\n"
+                                        "\n\nCANTIDAD DE NUEVOS COMMITS EN EL LOCAL REPOSITORY:\n"
                                         (if (null? (verificar-cambios-repositorys (cdr (caddr (cadr zonas))) (cdr (cadddr (cadr zonas))) null))
-                                            "No se han agregado commits en el Local Repository"
+                                            "No se han agregado nuevos commits en el Local Repository"
                                             (number->string (calcular-largo-lista (verificar-cambios-repositorys (cdr (caddr (cadr zonas))) (cdr (cadddr (cadr zonas))) null))))
                                         "\n\nRAMA ACTUAL DEL LOCAL REPOSITORY:\n" (car (caddr (cadr zonas))) "\n")
                          null))))
 
 
-;Descripcion: Funcion auxiliar de la funcion "log" 
+;Descripcion: Funcion auxiliar de la funcion "log". Genera un string de los ultimos n commits
 ;Dominio: Lista String X Entero X String
 ;Recorrido: String
 ;Recursion: Cola
@@ -252,16 +248,16 @@
                       null))))
                       
 
-;Descripcion:                  
+;Descripcion: Funcion auxiliar de la funcion "branch". Crea una nueva zona agregando el historial del comando aplicado                  
 ;Dominio:
 ;Recorrido:  
 (define branch-aux (lambda (inf repository zonas)
                      (list (agregar-elemento-final-lista (cons "BRANCH" (date->string (current-date) second)) inf) (set-repository-zonas repository zonas))))
 
 
-;Descripcion:                  
-;Dominio:
-;Recorrido:               
+;Descripcion: Funcion que toma el historial del ultimo commit y genera una nueva rama                  
+;Dominio: String X Zonas
+;Recorrido: Zonas               
 (define branch (lambda (nombre-rama)
                  (lambda (zonas)
                    (if (zonas? zonas)
@@ -271,6 +267,55 @@
                            null)))))
                            
                        
+
+
+
+
+; ----------------------- < EJEMPLOS DEL USO DE LAS FUNCIONES > -----------------------
+
+
+
+;EJEMPLOS DE USO FUNCIONES OBLIGATORIAS
+
+;(git pull)
+;(git push)
+;(git commit)
+
+;((git pull) '(("arch9.c" "arch8.c") ("arch7.c") ("Master" ("Primer commit" "arch6.c") ("Segundo commit" "arch5.c" "arch4.c")) ("Master" ("Primer commit" "arch6.c"))))
+;((git pull) '((("COMMIT" . "Monday, June 1st, 2020 12:34:26am")) (("arch9.c" "arch8.c") ("arch7.c") ("Master" ("Primer commit" "arch6.c") ("Segundo commit" "arch5.c" "arch4.c")) ("Master" ("Primer commit" "arch6.c")))))
+;((git pull) '((("COMMIT" . "Monday, June 1st, 2020 12:34:26am"))(("arch9.c" "arch8.c") ("arch7.c") ("Master" ("Primer commit" "arch6.c") ("Segundo commit" "arch5.c" "arch4.c"))("Master" ("Primer commit" "arch6.c") ("Segundo commit" "arch5.c" "arch4.c")))))
+
+;(((git add) (list "arch9.c")) '(("arch9.c" "arch8.c") ("arch7.c") ("Master" ("Primer commit" "arch6.c") ("Segundo commit" "arch5.c" "arch4.c")) ("Master" ("Primer commit" "arch6.c"))))
+;(((git add) null) '(("arch9.c" "arch8.c") ("arch7.c") ("Master" ("Primer commit" "arch6.c") ("Segundo commit" "arch5.c" "arch4.c")) ("Master" ("Primer commit" "arch6.c"))))
+;(((git add) null) '((("COMMIT" . "Monday, June 1st, 2020 12:34:26am"))(("arch9.c" "arch8.c")("arch7.c")("Master" ("Primer commit" "arch6.c") ("Segundo commit" "arch5.c" "arch4.c"))("Master" ("Primer commit" "arch6.c") ("Segundo commit" "arch5.c" "arch4.c")))))
+
+;(((git commit) "Tercer commit") '(("arch9.c" "arch8.c") ("arch7.c") ("Master" ("Primer commit" "arch6.c") ("Segundo commit" "arch5.c" "arch4.c")) ("Master" ("Primer commit" "arch6.c"))))
+;(((git commit) "Tercer commit") '((("ADD" . "Monday, June 1st, 2020 12:34:26am")) (("arch9.c" "arch8.c") ("arch7.c" "arch8.c") ("Master" ("Primer commit" "arch6.c") ("Segundo commit" "arch5.c" "arch4.c")) ("Master" ("Primer commit" "arch6.c") ("Segundo commit" "arch5.c" "arch4.c")))))
+;(((git commit) "Tercer commit") '((("ADD" . "Monday, June 1st, 2020 12:34:26am")) (("arch9.c" "arch8.c")  ("arch7.c" "arch8.c" "arch0.c")  ("Master" ("Primer commit" "arch6.c") ("Segundo commit" "arch5.c" "arch4.c")) ("Master" ("Primer commit" "arch6.c") ("Segundo commit" "arch5.c" "arch4.c")))))
+
+;((git push) '((("ADD" . "Monday, June 1st, 2020 12:34:26am"))(("arch9.c" "arch8.c") ("arch7.c" "arch8.c" "arch0.c") ("Master" ("Primer commit" "arch6.c") ("Segundo commit" "arch5.c" "arch4.c")) ("Master" ("Primer commit" "arch6.c")))))
+;((git push) '(("arch9.c" "arch8.c") ("arch7.c") ("Master" ("Primer commit" "arch6.c")) ("Master" ("Primer commit" "arch6.c"))))
+;((git push) '((("ADD" . "Monday, June 1st, 2020 12:34:26am")) (("arch9.c" "arch8.c") ("arch7.c" "arch8.c" "arch0.c") ("Master" ("Primer commit" "arch6.c") ("Segundo commit" "arch5.c") ("Tercer commit" "arch0.c"))("Master" ("Primer commit" "arch6.c")))))
+
+;(zonas->string '(("arch9.c" "arch8.c") ("arch7.c") ("Master" ("Primer commit" "arch6.c")) ("Master" ("Primer commit" "arch6.c"))))
+;(zonas->string '((("COMMIT" . "Monday, June 1st, 2020 12:34:26am")) (("arch9.c" "arch8.c")  ("arch7.c") ("Master" ("Primer commit" "arch6.c") ("Segundo commit" "arch5.c" "arch4.c")) ("Master" ("Primer commit" "arch6.c") ("Segundo commit" "arch5.c" "arch4.c")))))
+;(display (zonas->string '((("ADD" . "Monday, June 1st, 2020 12:34:26am") ("PUSH" . "Monday, June 1st, 2020 1:12:14am")) (("arch9.c" "arch8.c") ("arch7.c" "arch8.c" "arch0.c") ("Master" ("Primer commit" "arch6.c") ("Segundo commit" "arch5.c") ("Tercer commit" "arch0.c")) ("Master" ("Primer commit" "arch6.c") ("Segundo commit" "arch5.c") ("Tercer commit" "arch0.c"))))))
+
+
+
+;EJEMPLOS DE USO DE FUNCIONES EXTRAS
+
+;((git status) '(("arch9.c" "arch8.c") ("arch7.c") ("Master" ("Primer commit" "arch6.c")) ("Master" ("Primer commit" "arch6.c"))))
+;(display ((git status)  '((("COMMIT" . "Monday, June 1st, 2020 12:34:26am")) (("arch9.c" "arch8.c") ("arch7.c") ("Master" ("Primer commit" "arch6.c") ("Segundo commit" "arch5.c" "arch4.c") ("Tercer commit" "arch3.5")) ("Master" ("Primer commit" "arch6.c") ("Segundo commit" "arch5.c" "arch4.c"))))))
+;(display ((git status)  '((("COMMIT" . "Monday, June 1st, 2020 12:34:26am")) (("arch9.c" "arch8.c") ("arch7.c") ("Master" ("Primer commit" "arch6.c") ("Segundo commit" "arch5.c" "arch4.c")) ("Master" ("Primer commit" "arch6.c") ("Segundo commit" "arch5.c" "arch4.c"))))))
+
+;((git log)  '((("COMMIT" . "Monday, June 1st, 2020 12:34:26am")) (("arch9.c" "arch8.c") ("arch7.c") ("Master" ("Primer commit" "arch6.c") ("Segundo commit" "arch5.c" "arch4.c") ("Tercer commit" "arch3.5.c")) ("Master" ("Primer commit" "arch6.c") ("Segundo commit" "arch5.c" "arch4.c")))))
+;(display ((git log)  '((("COMMIT" . "Monday, June 1st, 2020 12:34:26am"))  (("arch9.c" "arch8.c") ("arch7.c") ("Master" ("Primer commit" "arch6.c") ("Segundo commit" "arch5.c" "arch4.c") ("Tercer commit" "arch3.5.c") ("Cuarto commit" "arch5.3.c") ("Quinto commit" "arch21.c" "arch43.c") ("Sexto commit" "archX.c")) ("Master" ("Primer commit" "arch6.c") ("Segundo commit" "arch5.c" "arch4.c") ("Tercer commit" "arch3.5.c")  ("Cuarto commit" "arch5.3.c") ("Quinto commit" "arch21.c" "arch43.c") ("Sexto commit" "archX.c"))))))
+;(display ((git log)  '((("COMMIT" . "Monday, June 1st, 2020 12:34:26am")) (("arch9.c" "arch8.c") ("arch7.c")  ("Master" ("Primer commit" "arch6.c") ("Segundo commit" "arch5.c" "arch4.c") ("Tercer commit" "arch3.5.c") ("Cuarto commit" "arch5.3.c") ("Quinto commit" "arch21.c" "arch43.c")) ("Master" ("Primer commit" "arch6.c") ("Segundo commit" "arch5.c" "arch4.c") ("Tercer commit" "arch3.5.c")  ("Cuarto commit" "arch5.3.c") ("Quinto commit" "arch21.c" "arch43.c"))))))
+
+;(((git branch) "Nueva Ramita") '((("COMMIT" . "Monday, June 1st, 2020 12:34:26am"))(("arch9.c" "arch8.c") ("arch7.c") ("Master" ("Primer commit" "arch6.c") ("Segundo commit" "arch5.c" "arch4.c")) ("Master" ("Primer commit" "arch6.c") ("Segundo commit" "arch5.c" "arch4.c")))))
+;(((git branch) "Ramita Jesús") '(("arch9.c" "arch8.c") ("arch7.c") ("Master" ("Primer commit" "arch6.c") ("Segundo commit" "arch5.c" "arch4.c") ("Tercer commit" "arcX.c"))("Master" ("Primer commit" "arch6.c") ("Segundo commit" "arch5.c" "arch4.c") ("Tercer commit" "arcX.c"))))
+;(((git branch) "Ramita XXX") '(("arch9.c" "arch8.c") ("arch7.c") ("Master" ("Primer commit" "arch6.c") ("Segundo commit" "arch5.c" "arch4.c") ("Tercer commit" "arcX.c")) ("Master" ("Primer commit" "arch6.c") ("Segundo commit" "arch5.c" "arch4.c") ("Tercer commit" "arcX.c"))))
 
 
 

@@ -1,6 +1,5 @@
 #lang racket
 
-;(define w (workspace "archivo1" "archivo2" "archivo3"))
 
 (require "listas.rkt")
 (provide (all-defined-out))
@@ -24,7 +23,7 @@
 
 ;-----<PERTENENCIA>-----
 
-;Descripción: Función que comprueba si una lista representa un workspace
+;Descripción: Función que comprueba si el elemento ingresado representa un workspace
 ;Dominio: 'a type
 ;Recorrido: Booleano
 (define workspace? (lambda (L)
@@ -53,6 +52,7 @@
                                         (agregar-archivo-workspace-aux archivo L null)
                                         null)))
 
+
 ;Descripción: Función que elimina un archivo del workspace
 ;Dominio: String x Workspace
 ;Recorrido: Workspace
@@ -70,9 +70,9 @@
 
 ;-----<OTRAS FUNCIONES>-----
 
-;Descipción: Función que comprueba si los archivos se encuentran en el Workspace
+;Descipción: Función que comprueba si los archivos ingresados se encuentran en el Workspace
 ;Dominio: Lista Strings X Workspace
-;Recorrido: Boolean
+;Recorrido: Booleano
 ;Recursión: Cola
 (define archivos-en-workspace (lambda (archivos L)
                                 (if (workspace? L)
@@ -84,15 +84,4 @@
                                     null)))
 
 
-
-
-
-
-
-
-
-
-
-
-                                                             
-                                                                             
+                                                                          

@@ -1,5 +1,5 @@
 #lang racket
-;ej: (zonas '("archivo9" "archivo 8") '("archivo7" "archivo6") '("master" ("Tercer commit" "archivo3" "archivo3.5")) '("master" ("Primer commit" "archivo5") ("Segundo commit" "archivo4" "archivo4.5")))
+
 (require "listas.rkt")
 (require "tda_1.rkt")
 (require "tda_2.rkt")
@@ -30,7 +30,7 @@
 
 ;-----<PERTENENCIA>-----
 
-;Descripción: Función que comprueba si una lista ingresada cumple con los requisitos para considerarse zonas
+;Descripción: Función que comprueba si el elemento ingresado cumple con los requisitos para considerarse zonas
 ;Dominio: 'a type
 ;Recorrido: Booleano
 (define zonas? (lambda (L)
@@ -164,9 +164,3 @@
                                                 (verificar-cambios-repositorys (cdr local) remote (agregar-elemento-final-lista (car local) commits))))))
 
 
-
-
-
-
-
-                                        

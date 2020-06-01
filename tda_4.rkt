@@ -1,9 +1,9 @@
 #lang racket
+
 (require "listas.rkt")
 (provide (all-defined-out))
-;ej: '("master" ("Primer commit" "archivo5") ("Segundo commit" "archivo4" "archivo4.5"))
-; ----------------------- < TDA REMOTE REPOSITORY > -----------------------
 
+; ----------------------- < TDA REMOTE REPOSITORY > -----------------------
 
 
 ;-----<CONSTRUCTOR>-----
@@ -24,7 +24,7 @@
 
 ;-----<PERTENENCIA>-----
 
-;Descripción: Función que comprueba si una lista ingresada cumple con los requisitos para considerarla un repositorio remoto
+;Descripción: Función que comprueba si el elemento ingresado cumple con los requisitos para considerarla un repositorio remoto
 ;Dominio: 'a type
 ;Recorrido: Booleano
 ;Recursión: Cola
@@ -99,7 +99,6 @@
                                             (if (null? commits)
                                                 L
                                                 (agregar-commits-remote-repository (cdr commits) (agregar-commit-remote-repository (car commits) L)))))
-                                            
                                             
                                             
                                             

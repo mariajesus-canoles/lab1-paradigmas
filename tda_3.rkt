@@ -25,7 +25,7 @@
 
 ;-----<PERTENENCIA>-----
 
-;Descripción: Función que comprueba si una lista ingresada cumple con los requisitos para considerarla un repositorio local 
+;Descripción: Función que comprueba si el elemento ingresado cumple con los requisitos para considerarla un repositorio local 
 ;Dominio: 'a type
 ;Recorrido: Booleano
 ;Recursión: Cola
@@ -68,7 +68,6 @@
                                         (archivos-local-repository (cdr L) (agregar-lista-final-lista (cdr (car L)) nuevo-L)))))
 
 
-
 ;-----<MODIFICADORES>-----
 
 ;Descripción: Función que agrega un commit a un repositorio local
@@ -90,8 +89,4 @@
 
 
 
-
-
-
-
-                                    
+                                   

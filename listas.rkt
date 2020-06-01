@@ -105,15 +105,3 @@
                             (invertir-lista (cdr lista) (cons (car lista) lista-aux)))))
                              
 
-
-
-
-
-
-
-
-
-
-
-
-
